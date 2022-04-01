@@ -1,0 +1,51 @@
+# Temporary
+.tmp
+*.tmp
+.*tmp
+~$*
+run/
+.tsbuildinfo
+.tsbuildinfo.*
+*.sw*
+*.un~
+
+# Logs
+log
+logs
+*.log
+*.log.gz
+
+# Dependency directory
+node_modules
+bower_components
+package-lock.json
+
+# Distribute packages
+dist
+target
+dependency-reduced-pom.xml
+coverage/
+
+# IDE configs
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode
+
+# OS hidden files
+.DS_Store
+
+# anchor
+*.pkl
+# tensorflow model
+*.h5
+# tensorflow-lite model
+*.tflite
+# seetaface model
+*.csta
+
+# python cache
+__pycache__
+
+_test
