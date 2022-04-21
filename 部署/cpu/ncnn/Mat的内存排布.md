@@ -5,7 +5,6 @@
 ## 2. ncnn::Mat的实现以及内存排布
 
 - 首先, 在c++里我们看到一个类, 一般都想知道这个类是要做什么的, 有什么功能, 简单的说类就是封装了一些函数和一些数据. ncnn::Mat这个类不涉及继承, 它在ncnn里扮演的角色就是**数据的表示.** 通常来说在阅读一个我首次见到的class时, 都是从它的构造函数, 数据成员, 析构函数开始看的.
-- 我们先来看构造函数, 构造函数一般来说就是初始化类的数据成员.
 - 下面的代码块, 我单独拎出来了其中的一个构造函数, 可以看到这个构造函数的实现是: 先初始化各个数据成员为0, `data(0),refcount(0),elemsize(0),elempack(0),allocator(0),dims(0),w(0),h(0),c(0),cstep(0)`然后调用`create函数`, 再重新初始化这些数据成员.
 - 下面分别解释一下各个数据成员的含义
 - **data**: 表示Mat分配的内存的头地址, 是一个指针类型
@@ -15,6 +14,7 @@
 - **w**: 表示数据的width, 是一个整数类型
 - **h**: 表示数据的height, 是一个整数类型
 - **c**: 表示数据的channel, 是一个整数类型
+- d:深度
 - **elempack**: 表示有多少个数据打包在一起, 是一个整数类型
 - **elemsize**: 表示打包在一起的数据占的字节数, 是一个整数类型
 - **cstep**: 表示channel step, 即走一个channel跨过的字节数, 是一个整数类型
@@ -62,15 +62,15 @@ inline void Mat::create(int _w, int _h, int _c, size_t _elemsize, Allocator* _al
 
 - 接下来都以图解的形式, 直观的表示Mat的内存排布
 
-![img](https://pic4.zhimg.com/v2-1becd30819bbf5da70aa2797ff735cd7_b.jpg)
+![img](imgs/v2-1becd30819bbf5da70aa2797ff735cd7_b.jpg)
 
-![img](https://pic1.zhimg.com/v2-41db06d3bd9e52ae710dccc31e8a974c_b.jpg)
+![img](imgs/v2-41db06d3bd9e52ae710dccc31e8a974c_b.jpg)
 
 下面是一个三维的Mat, 先给出实例代码以及对m赋值, 然后图解m的内存具体长什么样
 
-![img](https://pic1.zhimg.com/v2-f7391ae8fb18c3c10d22065e0bf54e84_b.jpg)
+![img](imgs/v2-f7391ae8fb18c3c10d22065e0bf54e84_b.jpg)
 
-![img](https://pic1.zhimg.com/v2-a4c1645385f32aefa722cd90d6961a28_b.jpg)
+![img](imgs/v2-a4c1645385f32aefa722cd90d6961a28_b.jpg)
 
 ```cpp
 // 返回总共的元素
@@ -95,7 +95,7 @@ operator T*();
 
 - 以上分别解释了一维, 二维, 三维的ncnn::Mat的内存排布, 但是它们都是elempack = 1的, 因为有很多小伙伴都不理解elempack这个变量的含义, 下面也给出图解实例, 阅读前请确保理解了上面的讲解
 
-![img](https://pic1.zhimg.com/v2-cd9d72fc0035efb3671a332c2f1f75ec_b.jpg)
+![img](imgs/v2-cd9d72fc0035efb3671a332c2f1f75ec_b.jpg)
 
 ------
 
